@@ -8,9 +8,19 @@ from .utils import log
 class IRC_client:
     irc = socket.socket()
 
-    def __init__(self):
+    def __init__(self, uname, client_socket, client_address):
         # Define the socket
         self.irc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket = client_socket
+
+        self.username_header = uname['header']
+        self.raw_username = uname['data']
+        self.username = self.raw_username.decode('utf-8')
+
+        self.ip = client_address[0]
+        self.port = client_address[1]
+        self.address = f'{self.ip}:{self.port}'
+
 
     def send(self, channel, msg):
         # Transfer data
